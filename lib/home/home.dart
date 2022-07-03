@@ -102,12 +102,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         currentFocus.unfocus();
                       }
 
-                      var data = NIK(nik: textValue);
-                      var result = data.parseNik();
+                      NIK data = NIK(nik: textValue);
+                      data.parseNik();
+                      bool status = data.getData("status");
 
-                      if (!result["status"]) {
+                      if (!status) {
+                        String msg = data.getData("msg");
+
                         Fluttertoast.showToast(
-                            msg: result["msg"],
+                            msg: msg,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.TOP,
                             timeInSecForIosWeb: 3,
