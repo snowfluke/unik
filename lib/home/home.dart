@@ -15,12 +15,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String textValue = "";
 
-  String caps(str) => str
-      .toLowerCase()
-      .split(" ")
-      .map((str) => str[0].toUpperCase() + str.substring(1))
-      .join(" ");
-
   @override
   Widget build(BuildContext context) {
     return ScreenContainer(
@@ -84,24 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: "Uraikan",
                     icon: const Icon(Icons.search),
                     action: () {
-                      if (textValue.length != 16) {
-                        Fluttertoast.showToast(
-                            msg: "Panjang NIK harus 16 karakter!",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 3,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 15);
-                        return;
-                      }
-
-                      FocusScopeNode currentFocus = FocusScope.of(context);
-
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-
                       NIK data = NIK(nik: textValue);
                       data.parseNik();
                       bool status = data.getData("status");
@@ -120,12 +96,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         return;
                       }
 
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+
                       List mappedResult = [
                         data.getData("kelamin"),
                         data.getData("lahir")["string"],
-                        caps(data.getData("provinsi")),
-                        caps(data.getData("kotakab")),
-                        caps(data.getData("kecamatan")),
+                        data.capitalize(data.getData("provinsi")),
+                        data.capitalize(data.getData("kotakab")),
+                        data.capitalize(data.getData("kecamatan")),
                         data.getData("tambahan")["kodepos"],
                         data.getData("uniqcode"),
                       ];
