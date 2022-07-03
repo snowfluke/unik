@@ -11,7 +11,8 @@ class ScreenContainer extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Center(child: Text(title)),
+        centerTitle: true, 
+        title: Text(title),
       ),
       body: Center(
           child: Padding(
