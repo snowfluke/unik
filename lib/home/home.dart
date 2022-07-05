@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nik_parser_id/nik_parser_id.dart';
 import 'package:unik/parse/parse.dart';
 import 'package:unik/shared/shared.dart';
@@ -14,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String textValue = "";
+  final alert = Alert();
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!status) {
                         String msg = data.getData("msg");
 
-                        Fluttertoast.showToast(
-                            msg: msg,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 3,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 15);
+                        alert.notify(msg);
                         return;
                       }
 

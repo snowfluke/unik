@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unik/shared/shared.dart';
 
-class ParseScreen extends StatelessWidget {
+class ParseScreen extends StatefulWidget {
   const ParseScreen({Key? key, required this.data, required this.nik})
       : super(key: key);
   final List data;
   final String nik;
+
+  @override
+  State<ParseScreen> createState() => _ParseScreenState();
+}
+
+class _ParseScreenState extends State<ParseScreen> {
+  final alert = Alert();
 
   getList(id, key) {
     const dataRemap = [
@@ -46,18 +53,23 @@ class ParseScreen extends StatelessWidget {
       title: "Hasil",
       child: Column(children: [
         Header(
-          title: nik,
+          title: widget.nik,
           button: ActionButton(
-              action: () {
-                Fluttertoast.showToast(
-                    msg: "Tersimpan (mock up)",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.TOP,
-                    timeInSecForIosWeb: 3,
-                    backgroundColor: Colors.black,
-                    textColor: Colors.white,
-                    fontSize: 15);
-                return;
+              action: () async {
+                try {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  List<String> listBefore =
+                      prefs.getStringList("shared_nik_list") ?? [];
+                  listBefore.add(widget.nik);
+
+                  prefs.setStringList("shared_nik_list", listBefore);
+                  alert.notify("Tersimpan");
+
+                  return;
+                } catch (e) {
+                  alert.notify("Terjadi kesalahan");
+                }
               },
               icon: const Icon(Icons.save_alt),
               label: "Simpan"),
@@ -73,7 +85,7 @@ class ParseScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: ListView.builder(
-                itemCount: data.length,
+                itemCount: widget.data.length,
                 itemBuilder: ((context, index) {
                   return Container(
                     margin: const EdgeInsets.only(bottom: 5),
@@ -102,7 +114,7 @@ class ParseScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           ),
                           Text(
-                            data[index],
+                            widget.data[index],
                             style: const TextStyle(fontSize: 17),
                           ),
                         ],
