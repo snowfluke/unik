@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unik/shared/shared.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:unik/themes.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return ScreenContainer(
       title: "Pengaturan",
       child: Column(
@@ -30,22 +32,15 @@ class SettingsScreen extends StatelessWidget {
                 const SizedBox(
                   width: 50,
                 ),
-                ToggleSwitch(
-                  minWidth: 50.0,
-                  cornerRadius: 20.0,
-                  activeBgColors: [
-                    [Colors.purple[300]!],
-                    [Colors.purple[300]!]
-                  ],
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey[200]!,
-                  inactiveFgColor: Colors.white,
-                  initialLabelIndex: 1,
-                  totalSwitches: 2,
-                  labels: const ['ON', 'OFF'],
-                  radiusStyle: true,
-                  onToggle: (index) {},
-                ),
+                Switch(
+                    value: themeProvider.isDark,
+                    activeColor: Colors.purple.shade300,
+                    onChanged: (el) {
+                      final provider =
+                          Provider.of<ThemeProvider>(context, listen: false);
+
+                      provider.toggleTheme(el);
+                    })
               ]),
             ),
           )

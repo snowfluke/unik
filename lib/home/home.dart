@@ -84,26 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       if (!status) {
                         String msg = data.getData("msg");
-
                         alert.notify(msg);
                         return;
                       }
 
                       FocusScopeNode currentFocus = FocusScope.of(context);
-
                       if (!currentFocus.hasPrimaryFocus) {
                         currentFocus.unfocus();
                       }
 
-                      List mappedResult = [
-                        data.getData("kelamin"),
-                        data.getData("lahir")["string"],
-                        data.capitalize(data.getData("provinsi")),
-                        data.capitalize(data.getData("kotakab")),
-                        data.capitalize(data.getData("kecamatan")),
-                        data.getData("tambahan")["kodepos"],
-                        data.getData("uniqcode"),
-                      ];
+                      List mappedResult = NIKParser.mapResult(data);
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>
