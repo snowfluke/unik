@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
               child: Row(children: [
                 const Expanded(
                   child: Text(
-                    "Tema gelap",
+                    "Tema gelap (under devs)",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
@@ -36,10 +36,10 @@ class SettingsScreen extends StatelessWidget {
                     value: themeProvider.isDark,
                     activeColor: Colors.purple.shade300,
                     onChanged: (el) {
-                      final provider =
-                          Provider.of<ThemeProvider>(context, listen: false);
-
-                      provider.toggleTheme(el);
+                      // final provider =
+                      //     Provider.of<ThemeProvider>(context, listen: false);
+                      themeProvider.toggleTheme(el);
+                      // provider.toggleTheme(el);
                     })
               ]),
             ),
