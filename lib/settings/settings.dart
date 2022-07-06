@@ -8,7 +8,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return ScreenContainer(
       title: "Pengaturan",
       child: Column(
@@ -32,15 +31,15 @@ class SettingsScreen extends StatelessWidget {
                 const SizedBox(
                   width: 50,
                 ),
-                Switch(
-                    value: themeProvider.isDark,
-                    activeColor: Colors.purple.shade300,
-                    onChanged: (el) {
-                      // final provider =
-                      //     Provider.of<ThemeProvider>(context, listen: false);
-                      themeProvider.toggleTheme(el);
-                      // provider.toggleTheme(el);
-                    })
+                Consumer<ThemeProvider>(builder: (context, provider, child) {
+                  return Switch(
+                      value: provider.currentTheme == "light" ? false : true,
+                      activeColor: Colors.purple.shade300,
+                      onChanged: (el) {
+                        String themeValue = el ? "dark" : "light";
+                        provider.changeTheme(themeValue);
+                      });
+                }),
               ]),
             ),
           )

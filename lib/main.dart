@@ -4,7 +4,10 @@ import 'package:unik/themes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<ThemeProvider>(
+    create: (_) => ThemeProvider()..initialize(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,19 +16,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
-        builder: (BuildContext context, child) {
-          final themeProvider =
-              Provider.of<ThemeProvider>(context, listen: false);
-
-          return MaterialApp(
-            themeMode: themeProvider.themeMode,
-            theme: MyThemes.lightTheme,
-            darkTheme: MyThemes.darkTheme,
-            home: const MainScreen(),
-            title: 'unik',
-          );
-        });
+    return Consumer<ThemeProvider>(builder: (context, provider, child) {
+      return MaterialApp(
+        home: const MainScreen(),
+        title: 'unik',
+        theme: MyThemes.lightTheme,
+        darkTheme: MyThemes.darkTheme,
+        themeMode: provider.themeMode,
+      );
+    });
   }
 }

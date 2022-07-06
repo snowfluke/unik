@@ -17,11 +17,7 @@ class Header extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 24,
-              color: Color(0xcc000000),
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headline4,
           ),
           button != null
               ? Container(child: button)

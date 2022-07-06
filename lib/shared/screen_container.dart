@@ -9,9 +9,8 @@ class ScreenContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        centerTitle: true, 
+        centerTitle: true,
         title: Text(title),
       ),
       body: Center(
