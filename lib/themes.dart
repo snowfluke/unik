@@ -26,10 +26,10 @@ class MyThemes {
       appBarTheme: AppBarTheme(backgroundColor: Colors.purple.shade300),
       scaffoldBackgroundColor: Colors.grey.shade200,
       fontFamily: GoogleFonts.nunito().fontFamily,
-      colorScheme: ColorScheme.light());
+      colorScheme: const ColorScheme.light());
   static final darkTheme = ThemeData(
       appBarTheme: AppBarTheme(backgroundColor: Colors.purple.shade300),
       scaffoldBackgroundColor: Colors.grey.shade900,
       fontFamily: GoogleFonts.nunito().fontFamily,
-      colorScheme: ColorScheme.dark());
+      colorScheme: const ColorScheme.dark());
 }
