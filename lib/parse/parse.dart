@@ -63,7 +63,11 @@ class _ParseScreenState extends State<ParseScreen> {
                       prefs.getStringList("shared_nik_list") ?? [];
                   listBefore.add(widget.nik);
 
-                  prefs.setStringList("shared_nik_list", listBefore);
+                  List<String> distinctList = [
+                    ...{...listBefore}
+                  ];
+
+                  prefs.setStringList("shared_nik_list", distinctList);
                   alert.notify("Tersimpan");
 
                   return;
